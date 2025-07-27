@@ -6,8 +6,8 @@
  * You may obtain a copy of the License at
  */
 
-package com.xshley.navigation
+package com.xshley.navigation.navigable
 
-import com.xshley.navigation.navigable.Navigable
+import com.xshley.navigation.collections.stack.MutableStack
 
-abstract class Screen(defaultRoute: String? = null) : Navigable.AbstractComposable(defaultRoute)
+interface NavigableStack<S : Navigable> : MutableStack<S>

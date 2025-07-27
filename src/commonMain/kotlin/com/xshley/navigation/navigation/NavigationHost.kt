@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Ashley <ax-ie>
+ * Copyright (c) 2025. Ashley <xshley>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -8,18 +8,16 @@
 
 package com.xshley.navigation.navigation
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.xshley.navigation.routable.Routable
+import com.xshley.navigation.navigable.Navigable
 
-class NavigationHostWrapper<S : Routable>(
+@Immutable
+data class NavigationHost<S : Navigable>(
     val configuration: Configuration = Configuration()
 ) {
     val hostController: NavHostController
@@ -28,30 +26,16 @@ class NavigationHostWrapper<S : Routable>(
     private lateinit var internalHostController: NavHostController
 
     @Composable
-    fun begin(
-        content: @Composable NavigationHostWrapper<S>.() -> Unit
+    fun Compose(
+        compose: @Composable NavigationHost<S>.() -> Unit
     ) {
         internalHostController = rememberNavController()
 
-        content()
+        compose()
     }
 
     @Immutable
     data class Configuration(
         val modifier: Modifier = Modifier.fillMaxSize(),
-
-        val enterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
-            {
-                fadeIn(animationSpec = tween(350))
-            },
-
-        val exitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
-            {
-                fadeOut(animationSpec = tween(350))
-            }
     )
 }

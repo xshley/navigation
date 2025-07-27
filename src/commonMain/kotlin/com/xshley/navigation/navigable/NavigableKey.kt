@@ -1,13 +1,12 @@
 /*
- * Copyright (c) 2024-2025. Ashley <ax-ie>
+ * Copyright (c) 2025. Ashley <xshley>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  */
 
-package com.xshley.navigation.shared.string
+package com.xshley.navigation.navigable
 
-import com.xshley.navigation.shared.Converter
+typealias NavigableKey = String
 
-fun interface StringConverter<S> : Converter<S, String>

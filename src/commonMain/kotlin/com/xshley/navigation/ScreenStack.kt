@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Ashley <ax-ie>
+ * Copyright (c) 2025. Ashley <xshley>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,38 +9,35 @@
 package com.xshley.navigation
 
 import androidx.compose.runtime.Composable
-import com.xshley.navigation.navigation.NavigationHostWrapper
-import com.xshley.navigation.routable.Routables
+import com.xshley.navigation.navigable.NavigableRegistry
+import com.xshley.navigation.navigation.NavigationHost
 
-
-abstract class ScreenStack<S : Screen>(
-    val host: ScreenHost<S>,
+abstract class ScreenStack<S : Screen> private constructor(
+    val controller: ScreenHost<S>,
 
     defaultRoute: String? = null
 ) : Screen(defaultRoute) {
     constructor(
-        routables: Routables<S>,
-        wrapper: NavigationHostWrapper<S> = NavigationHostWrapper(),
-        defaultRoute: String? = null
+        routables: NavigableRegistry<S>,
+        controller: NavigationHost<S> = NavigationHost()
     ) : this(
-        host = ScreenHost(wrapper, routables),
-        defaultRoute = defaultRoute
+        controller = ScreenHost(controller, routables),
+        defaultRoute = routables.default.route
     )
 
     constructor(
         default: S,
         vararg others: S,
-        wrapper: NavigationHostWrapper<S> = NavigationHostWrapper(),
-        defaultRoute: String? = null
+        controller: NavigationHost<S> = NavigationHost(),
     ) : this(
-        host = ScreenHost(
+        controller = ScreenHost(
             default,
             *others,
-            wrapper = wrapper
+            host = controller
         ),
-        defaultRoute = defaultRoute
+        defaultRoute = default.route
     )
 
     @Composable
-    override fun compose() = host.construct()
+    override fun Compose() = controller.Compose()
 }

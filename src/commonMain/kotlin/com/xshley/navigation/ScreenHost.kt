@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025. Ashley <ax-ie>
+ * Copyright (c) 2025. Ashley <xshley>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -8,19 +8,23 @@
 
 package com.xshley.navigation
 
-import com.xshley.navigation.navigation.AbstractNavigationHostController
-import com.xshley.navigation.navigation.NavigationHostWrapper
-import com.xshley.navigation.routable.Routables
+import com.xshley.navigation.navigable.NavigableRegistry
+import com.xshley.navigation.navigation.NavigationController
+import com.xshley.navigation.navigation.NavigationHost
 
-open class ScreenHost<S : Screen> : AbstractNavigationHostController<S> {
+open class ScreenHost<S : Screen> : NavigationController<S> {
     constructor(
-        wrapper: NavigationHostWrapper<S> = NavigationHostWrapper(),
-        routables: Routables<S>
-    ) : super(wrapper, routables)
+        wrapper: NavigationHost<S> = NavigationHost(),
+        routes: NavigableRegistry<S>
+    ) : super(wrapper, routes)
 
-    constructor(default: S, vararg others: S, wrapper: NavigationHostWrapper<S> = NavigationHostWrapper()) : super(
+    constructor(
+        default: S,
+        vararg others: S,
+        host: NavigationHost<S> = NavigationHost()
+    ) : super(
         default,
         *others,
-        wrapper = wrapper
+        controller = host
     )
 }

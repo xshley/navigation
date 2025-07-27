@@ -6,8 +6,12 @@
  * You may obtain a copy of the License at
  */
 
-package com.xshley.navigation
+package com.xshley.navigation.navigation
 
 import com.xshley.navigation.navigable.Navigable
+import com.xshley.navigation.navigable.NavigableRegistry
+import com.xshley.navigation.navigable.NavigableStack
 
-abstract class Screen(defaultRoute: String? = null) : Navigable.AbstractComposable(defaultRoute)
+abstract class Navigation<S : Navigable>(
+    val registry: NavigableRegistry<S>
+) : NavigableStack<S>, HasDestination<S>

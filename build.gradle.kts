@@ -15,6 +15,9 @@ plugins {
     id("maven-publish")
 }
 
+group = "com.xshley.navigation"
+version = "1.0.0"
+
 kotlin {
     jvm()
 
