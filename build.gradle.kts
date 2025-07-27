@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+
 /*
  * Copyright (c) 2024. Ashley <xshley>
  *
@@ -11,6 +13,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
+
 
     id("maven-publish")
 }
@@ -27,6 +30,17 @@ java {
 kotlin {
     jvm()
 
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -35,6 +49,7 @@ kotlin {
 
             implementation(kotlin("reflect"))
         }
+
     }
 }
 
@@ -48,3 +63,5 @@ publishing {
         }
     }
 }
+
+
